@@ -1,4 +1,5 @@
 include_directories (${SealPIR_SOURCE_DIR}/src)
+set(COMPILE_FLAGS -g)
 
 add_executable(coefficient_conversion_test coefficient_conversion_test.cpp)
 target_link_libraries(coefficient_conversion_test sealpir)
@@ -23,3 +24,7 @@ add_test(NAME replace_test COMMAND replace_test)
 add_executable(decomposition_test decomposition_test.cpp)
 target_link_libraries(decomposition_test sealpir)
 add_test(NAME decomposition_test COMMAND decomposition_test)
+
+add_executable(matrix_mul_test matrix_mul_test.cpp)
+target_link_libraries(matrix_mul_test sealpir)
+add_test(NAME matrix_mul_test COMMAND matrix_mul_test)

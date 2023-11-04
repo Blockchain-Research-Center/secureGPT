@@ -1,0 +1,68 @@
+[
+{
+  "directory": "/home/irin/code/secure-inference/SealPIR/build",
+  "command": "/usr/bin/clang++ -isystem /usr/local/include/SEAL-4.1 -g -std=gnu++17 -o src/CMakeFiles/sealpir.dir/pir.cpp.o -c /home/irin/code/secure-inference/SealPIR/src/pir.cpp",
+  "file": "/home/irin/code/secure-inference/SealPIR/src/pir.cpp",
+  "output": "src/CMakeFiles/sealpir.dir/pir.cpp.o"
+},
+{
+  "directory": "/home/irin/code/secure-inference/SealPIR/build",
+  "command": "/usr/bin/clang++ -isystem /usr/local/include/SEAL-4.1 -g -std=gnu++17 -o src/CMakeFiles/sealpir.dir/pir_client.cpp.o -c /home/irin/code/secure-inference/SealPIR/src/pir_client.cpp",
+  "file": "/home/irin/code/secure-inference/SealPIR/src/pir_client.cpp",
+  "output": "src/CMakeFiles/sealpir.dir/pir_client.cpp.o"
+},
+{
+  "directory": "/home/irin/code/secure-inference/SealPIR/build",
+  "command": "/usr/bin/clang++ -isystem /usr/local/include/SEAL-4.1 -g -std=gnu++17 -o src/CMakeFiles/sealpir.dir/pir_server.cpp.o -c /home/irin/code/secure-inference/SealPIR/src/pir_server.cpp",
+  "file": "/home/irin/code/secure-inference/SealPIR/src/pir_server.cpp",
+  "output": "src/CMakeFiles/sealpir.dir/pir_server.cpp.o"
+},
+{
+  "directory": "/home/irin/code/secure-inference/SealPIR/build",
+  "command": "/usr/bin/clang++ -isystem /usr/local/include/SEAL-4.1 -g -std=gnu++17 -o src/CMakeFiles/main.dir/main.cpp.o -c /home/irin/code/secure-inference/SealPIR/src/main.cpp",
+  "file": "/home/irin/code/secure-inference/SealPIR/src/main.cpp",
+  "output": "src/CMakeFiles/main.dir/main.cpp.o"
+},
+{
+  "directory": "/home/irin/code/secure-inference/SealPIR/build",
+  "command": "/usr/bin/clang++ -I/home/irin/code/secure-inference/SealPIR/src -isystem /usr/local/include/SEAL-4.1 -g -std=gnu++17 -o test/CMakeFiles/coefficient_conversion_test.dir/coefficient_conversion_test.cpp.o -c /home/irin/code/secure-inference/SealPIR/test/coefficient_conversion_test.cpp",
+  "file": "/home/irin/code/secure-inference/SealPIR/test/coefficient_conversion_test.cpp",
+  "output": "test/CMakeFiles/coefficient_conversion_test.dir/coefficient_conversion_test.cpp.o"
+},
+{
+  "directory": "/home/irin/code/secure-inference/SealPIR/build",
+  "command": "/usr/bin/clang++ -I/home/irin/code/secure-inference/SealPIR/src -isystem /usr/local/include/SEAL-4.1 -g -std=gnu++17 -o test/CMakeFiles/expand_test.dir/expand_test.cpp.o -c /home/irin/code/secure-inference/SealPIR/test/expand_test.cpp",
+  "file": "/home/irin/code/secure-inference/SealPIR/test/expand_test.cpp",
+  "output": "test/CMakeFiles/expand_test.dir/expand_test.cpp.o"
+},
+{
+  "directory": "/home/irin/code/secure-inference/SealPIR/build",
+  "command": "/usr/bin/clang++ -I/home/irin/code/secure-inference/SealPIR/src -isystem /usr/local/include/SEAL-4.1 -g -std=gnu++17 -o test/CMakeFiles/query_test.dir/query_test.cpp.o -c /home/irin/code/secure-inference/SealPIR/test/query_test.cpp",
+  "file": "/home/irin/code/secure-inference/SealPIR/test/query_test.cpp",
+  "output": "test/CMakeFiles/query_test.dir/query_test.cpp.o"
+},
+{
+  "directory": "/home/irin/code/secure-inference/SealPIR/build",
+  "command": "/usr/bin/clang++ -I/home/irin/code/secure-inference/SealPIR/src -isystem /usr/local/include/SEAL-4.1 -g -std=gnu++17 -o test/CMakeFiles/simple_query_test.dir/simple_query_test.cpp.o -c /home/irin/code/secure-inference/SealPIR/test/simple_query_test.cpp",
+  "file": "/home/irin/code/secure-inference/SealPIR/test/simple_query_test.cpp",
+  "output": "test/CMakeFiles/simple_query_test.dir/simple_query_test.cpp.o"
+},
+{
+  "directory": "/home/irin/code/secure-inference/SealPIR/build",
+  "command": "/usr/bin/clang++ -I/home/irin/code/secure-inference/SealPIR/src -isystem /usr/local/include/SEAL-4.1 -g -std=gnu++17 -o test/CMakeFiles/replace_test.dir/replace_test.cpp.o -c /home/irin/code/secure-inference/SealPIR/test/replace_test.cpp",
+  "file": "/home/irin/code/secure-inference/SealPIR/test/replace_test.cpp",
+  "output": "test/CMakeFiles/replace_test.dir/replace_test.cpp.o"
+},
+{
+  "directory": "/home/irin/code/secure-inference/SealPIR/build",
+  "command": "/usr/bin/clang++ -I/home/irin/code/secure-inference/SealPIR/src -isystem /usr/local/include/SEAL-4.1 -g -std=gnu++17 -o test/CMakeFiles/decomposition_test.dir/decomposition_test.cpp.o -c /home/irin/code/secure-inference/SealPIR/test/decomposition_test.cpp",
+  "file": "/home/irin/code/secure-inference/SealPIR/test/decomposition_test.cpp",
+  "output": "test/CMakeFiles/decomposition_test.dir/decomposition_test.cpp.o"
+},
+{
+  "directory": "/home/irin/code/secure-inference/SealPIR/build",
+  "command": "/usr/bin/clang++ -I/home/irin/code/secure-inference/SealPIR/src -isystem /usr/local/include/SEAL-4.1 -g -std=gnu++17 -o test/CMakeFiles/matrix_mul_test.dir/matrix_mul_test.cpp.o -c /home/irin/code/secure-inference/SealPIR/test/matrix_mul_test.cpp",
+  "file": "/home/irin/code/secure-inference/SealPIR/test/matrix_mul_test.cpp",
+  "output": "test/CMakeFiles/matrix_mul_test.dir/matrix_mul_test.cpp.o"
+}
+]

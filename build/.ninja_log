@@ -1,0 +1,21 @@
+# ninja log v5
+2903	2985	1695104338632587168	/home/irin/code/secure-inference/SealPIR/bin/matrix_mul_test	b04b8d02fb2197d3
+2806	2902	1695104338544586841	src/libsealpir.a	35e0d310cdee20d2
+1	2484	1695104338124585282	test/CMakeFiles/simple_query_test.dir/simple_query_test.cpp.o	5556301706f458de
+2902	3019	1695104338664587287	/home/irin/code/secure-inference/SealPIR/bin/coefficient_conversion_test	e3825e92f370c7f7
+1	2473	1695104338104585208	src/CMakeFiles/sealpir.dir/pir_client.cpp.o	797646d3c0d06c65
+1	2448	1695104338084585133	src/CMakeFiles/sealpir.dir/pir.cpp.o	62383708c4a58498
+1	2806	1695104338440586455	src/CMakeFiles/sealpir.dir/pir_server.cpp.o	cebeb6fed907f4a3
+2902	3076	1695104338720587495	/home/irin/code/secure-inference/SealPIR/bin/query_test	255bda1edd942fb
+2902	3076	1695104338720587495	/home/irin/code/secure-inference/SealPIR/bin/expand_test	aba565c8e6046045
+2902	3076	1695104338720587495	/home/irin/code/secure-inference/SealPIR/bin/main	87921017e7c6d73c
+1	2079	1695104337720583782	test/CMakeFiles/coefficient_conversion_test.dir/coefficient_conversion_test.cpp.o	d64bef184ce44b71
+2	2388	1695104338024584911	test/CMakeFiles/replace_test.dir/replace_test.cpp.o	4a268b9ba899e8f7
+2902	3075	1695104338720587495	/home/irin/code/secure-inference/SealPIR/bin/simple_query_test	4496ff23eab28bbc
+2	2090	1695104337732583827	test/CMakeFiles/matrix_mul_test.dir/matrix_mul_test.cpp.o	d541c97f7b1b98a5
+2903	3019	1695104338664587287	/home/irin/code/secure-inference/SealPIR/bin/decomposition_test	d1445ff05292a965
+2	2167	1695104337808584108	test/CMakeFiles/decomposition_test.dir/decomposition_test.cpp.o	91313d0837faec7d
+1	2301	1695104337940584599	test/CMakeFiles/query_test.dir/query_test.cpp.o	1d595986014b8816
+2903	3072	1695104338716587479	/home/irin/code/secure-inference/SealPIR/bin/replace_test	fc3249f887f4f1cd
+1	2373	1695104338012584866	test/CMakeFiles/expand_test.dir/expand_test.cpp.o	852e5ec1d8469ebc
+1	2337	1695104337976584732	src/CMakeFiles/main.dir/main.cpp.o	77b6901c90d10188

@@ -24,17 +24,20 @@ int main(int argc, char *argv[]) {
   uint32_t logt = 20;
   uint32_t d = 1;
 
-  EncryptionParameters enc_params(scheme_type::bfv);
+  EncryptionParameters enc_params(scheme_type::bgv);
   PirParams pir_params;
 
   // Generates all parameters
 
   cout << "Main: Generating SEAL parameters" << endl;
   gen_encryption_params(N, logt, enc_params);
+  // enc_params.set_poly_modulus_degree(N);
+  // enc_params.set_coeff_modulus(CoeffModulus::BFVDefault(N));
+  // enc_params.set_plain_modulus(1<<20);
 
-  cout << "Main: Verifying SEAL parameters" << endl;
-  verify_encryption_params(enc_params);
-  cout << "Main: SEAL parameters are good" << endl;
+  // cout << "Main: Verifying SEAL parameters" << endl;
+  // verify_encryption_params(enc_params);
+  // cout << "Main: SEAL parameters are good" << endl;
 
   cout << "Main: Generating PIR parameters" << endl;
   gen_pir_params(number_of_items, size_per_item, d, enc_params, pir_params);
@@ -76,11 +79,10 @@ int main(int argc, char *argv[]) {
   // Measure query processing (including expansion)
   auto time_server_s = high_resolution_clock::now();
   uint64_t n_i = pir_params.nvec[0];
-  vector<Ciphertext> expanded_query = server.expand_query(query[0][0], n_i, 0);
+  vector<Ciphertext> expanded_query = server.expand_query(query[0][0], 128, 0);
   auto time_server_e = high_resolution_clock::now();
-  auto time_server_us =
-      duration_cast<microseconds>(time_server_e - time_server_s).count();
-  cout << "Main: query expanded" << endl;
+  auto time_server_us = duration_cast<milliseconds>(time_server_e - time_server_s).count();
+  cout << "Main: query expanded to " << 128 << " takes " << time_server_us << " milliseconds" << endl;
 
   assert(expanded_query.size() == n_i);
 
