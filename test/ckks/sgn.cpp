@@ -1,6 +1,7 @@
 #include "sgn.h"
 #include <chrono>
 #include <cassert>
+#include <cstdio>
 #include <mutex>
 #include <iomanip>
 #include <thread>
@@ -33,33 +34,6 @@ void SgnEvaluator::sgn(int dg, int df, Ciphertext& x, Ciphertext& dest, shared_p
     }
 }
 
-double SgnEvaluator::sgn_plain(int dg, int df, double x) {
-    double curr = x;
-    for (int i = 1; i <= dg; i++) {
-        double mul = (i == dg && df == 0) ? mul_last : 1;
-
-        cout << curr << " -> ";
-        double next = g4_coeffs[9]/g4_scale * mul;
-        for (int d=8; d >= 0; d--) {
-            next *= curr;
-            if (d & 1) next += g4_coeffs[d]/g4_scale * mul;
-        }
-        curr = next; 
-    }
-    for (int i = 1; i <= df; i++) {
-        double mul = (i == df) ? mul_last : 1;
-
-        cout << curr << " -> ";
-        double next = f4_coeffs[9]/f4_scale * mul;
-        for (int d=8; d >= 0; d--) {
-            next *= curr;
-            if (d & 1) next += f4_coeffs[d]/f4_scale * mul;
-        }
-        curr = next;
-    }
-    cout << curr << endl;
-    return curr;
-}
 
 
 void SgnEvaluator::eval_odd_deg9_poly(vector<double>& a, Ciphertext& x, Ciphertext& dest, shared_ptr<CKKSManager> ckks) {
@@ -125,6 +99,13 @@ void SgnEvaluator::eval_odd_deg9_poly(vector<double>& a, Ciphertext& x, Cipherte
     uint64_t q = ckks->get_modulus(x, 2);
     uint64_t r = ckks->get_modulus(x, 3);
     uint64_t s = ckks->get_modulus(x, 4);
+    uint64_t t = ckks->get_modulus(x, 5);
+
+    p=q;
+    q=r;
+    r=s;
+    s=t;
+
     vector<double> a_scales(10);
     a_scales[1] = q;
     a_scales[3] = (double)p/D * q/D * r;
@@ -154,7 +135,8 @@ void SgnEvaluator::eval_odd_deg9_poly(vector<double>& a, Ciphertext& x, Cipherte
 
     // Build T1
     Ciphertext T1;
-    ckks->encoder->encode(a[5], x2.parms_id(), a_scales[5], a5); // L-1
+    double a5_scale = D/x2.scale()*p/x3.scale()*q;
+    ckks->encoder->encode(a[5], x2.parms_id(), a5_scale, a5); // L-1
     evaluator->multiply_plain(x2, a5, T1);
     evaluator->rescale_to_next_inplace(T1); // L-2
 
@@ -172,22 +154,23 @@ void SgnEvaluator::eval_odd_deg9_poly(vector<double>& a, Ciphertext& x, Cipherte
     // Build T2
     Ciphertext T2;
     Plaintext a9_switched;
-    ckks->encoder->encode(a[9], x3.parms_id(), a_scales[9], a9); // L-2
+    double a9_scale = D/x3.scale()*r/x6.scale()*q;
+    ckks->encoder->encode(a[9], x3.parms_id(), a9_scale, a9); // L-2
     evaluator->multiply_plain(x3, a9, T2);
     evaluator->rescale_to_next_inplace(T2); // L-3
 
     Ciphertext a7x;
-    ckks->encoder->encode(a[7], x.parms_id(), a_scales[7], a7); // L-1 (x was modswitched)
+    double a7_scale = T2.scale()/x.scale()*p;
+    ckks->encoder->encode(a[7], x.parms_id(), a7_scale, a7); // L-1 (x was modswitched)
     evaluator->multiply_plain(x, a7, a7x);
     evaluator->rescale_to_next_inplace(a7x); // L-2
-    
     evaluator->mod_switch_to_inplace(a7x, T2.parms_id()); // L-3
+
 
     assert(fabs(T2.scale() - a7x.scale()) < 1);
     double mid_scale = (T2.scale() + a7x.scale()) / 2;
     T2.scale() = a7x.scale() = mid_scale; // this is the correct scale now, need to set it still to avoid SEAL assert
     evaluator->add_inplace(T2, a7x); // L-3
-
     evaluator->multiply_inplace(T2, x6), n_ct_muls++;
     evaluator->relinearize_inplace(T2, ckks->relin_keys);
     evaluator->rescale_to_next_inplace(T2); // L-4
@@ -196,7 +179,7 @@ void SgnEvaluator::eval_odd_deg9_poly(vector<double>& a, Ciphertext& x, Cipherte
 
     // Build T3
     Ciphertext T3;
-    ckks->encoder->encode(a[1], x.parms_id(), a_scales[1], a1); // L-1 (x was modswitched)
+    ckks->encoder->encode(a[1], x.parms_id(), p, a1); // L-1 (x was modswitched)
     evaluator->multiply_plain(x, a1, T3);
     evaluator->rescale_to_next_inplace(T3); // L-2
 
@@ -224,3 +207,35 @@ void SgnEvaluator::eval_odd_deg9_poly(vector<double>& a, Ciphertext& x, Cipherte
     // cout << "Poly eval took " << duration_cast<milliseconds>(time_end - time_start).count() << " ms" << endl;
 
 }
+
+void SgnEvaluator::eval_seg_gelu(vector<double>& a, Ciphertext& x, Ciphertext& dest_p, Ciphertext& dest_q, shared_ptr<CKKSManager> ckks) {
+
+    shared_ptr<Evaluator> evaluator = ckks->evaluator;
+
+    Ciphertext x2, x3, x4, x6;
+
+    evaluator->square(x, x2);
+    evaluator->relinearize_inplace(x2, ckks->relin_keys);
+    evaluator->rescale_to_next_inplace(x2); // L-1
+
+    evaluator->mod_switch_to_next_inplace(x); // L-1
+    evaluator->multiply(x2, x, x3);
+    evaluator->relinearize_inplace(x3, ckks->relin_keys);  
+    evaluator->rescale_to_next_inplace(x3); // L-2
+
+    evaluator->square(x2, x4);
+    evaluator->relinearize_inplace(x4, ckks->relin_keys);
+    evaluator->rescale_to_next_inplace(x4); // L-3
+
+    evaluator->square(x3, x6);
+    evaluator->relinearize_inplace(x6, ckks->relin_keys);
+    evaluator->rescale_to_next_inplace(x6); // L-3
+
+    // dest_p = a[3] * x^3 + a[2] * x^2 + a[1] * x + a[0]
+    // dest_q = b[6] * x^6 + b[4] * x^4 + b[2] * x^2 + b[1] * x + b[0]
+    vector<float> a_coeffs = {-0.5054031199708174, -0.42226581151983866, -0.11807612951181953, -0.011034134030615728};
+    vector<float> b_coeffs = {0.008526321541038084,  0.5, 0.3603292692789629, 0.0, -0.037688200365904236, 0.0, 0.0018067462606141187};
+
+    
+}
+

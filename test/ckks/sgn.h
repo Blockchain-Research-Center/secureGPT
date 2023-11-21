@@ -14,7 +14,7 @@ public:
         // Precompute coeffs and coeffs_last by dividing by scale
         f4_coeffs_last.resize(10, 0);
         g4_coeffs_last.resize(10, 0);
-        for (int i : {1, 3, 5, 7, 9}) {
+        for (int i = 0; i <=9; i++) {
             f4_coeffs[i] /= f4_scale;
             f4_coeffs_last[i] = f4_coeffs[i] * mul_last;
 
@@ -25,9 +25,8 @@ public:
 
     // Evaluates f4^(df) o g4^(dg) at x (Ciphertext)
     void sgn(int dg, int df, Ciphertext& x, Ciphertext& dest, shared_ptr<CKKSManager> ckks);
+    void eval_seg_gelu(vector<double>& a, Ciphertext& x, Ciphertext& dest_p, Ciphertext& dest_q, shared_ptr<CKKSManager> ckks);
 
-    // Evaluates f4^(df) o g4^(dg) at x (double)
-    double sgn_plain(int dg, int df, double x);
 private:
     bool VERBOSE;
     double mul_last;
