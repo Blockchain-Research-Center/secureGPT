@@ -112,6 +112,7 @@ int main()
     ckks->evaluator->relinearize_inplace(x6, ckks->relin_keys);
     ckks->evaluator->rescale_to_next_inplace(x6); // L-3
 
+    // A0+A1x2+ (A2+A3x)x^2
     Plaintext A0, A1, A2, A3;
     double a2_scale = D / x2.scale() * q;
     ckks->encoder->encode(A[0], x3.parms_id(), D, A0);
@@ -137,6 +138,7 @@ int main()
 
     ckks->evaluator->add_inplace(a3x, a1x);
 
+    // B0+B1x+B2x^2 +  (B3+B4x+B5x^2)x^3 + B6x^6
     Plaintext B0, B1, B2, B3, B4, B5, B6;
 
     ckks->encoder->encode(B[0], x3.parms_id(), D, B0);
